@@ -1,0 +1,137 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="test-app-challenge">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      .lista {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .lista .item {
+        cursor: pointer;
+        flex: 1;
+        padding: 1rem;
+        text-align: center;
+      }
+
+      .lista .item.active1 {
+        background: cyan;
+      }
+
+      .lista .item.active2 {
+        background: magenta;
+        /*color: #fff;*/
+      }
+
+    </style>
+    <div class="lista">
+      <template is="dom-repeat" items="{{tags}}">
+        <btn class$="item {{isActive(item,tab)}}" on-click="myClick">
+          [[item]]
+        </btn>
+      </template>
+    </div>
+  </template>
+
+  <script>
+    /**
+     * `test-app-challenge`
+     * Listas
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class TestAppChallenge extends Polymer.Element {
+      static get is() { return 'test-app-challenge' }
+
+      static get properties() {
+        return {
+          listas: {
+            type: Array,
+            value() {
+              return []
+            }
+          },
+          tags: {
+            type: Array,
+            value() {
+              return []
+            }
+          },
+          tab: {
+            type: String,
+            notify: false
+          },
+          clicks: {
+            type: Number
+          }
+        }
+      }
+
+      static get observers() {
+        return [
+          'buscaTags(listas.splices)'
+        ]
+      }
+
+      buscaTags(propiedad) {
+        var tags = this.tags
+        this.set('tags', [])
+        this.set('tags', tags)
+        if (propiedad) {
+          propiedad.indexSplices.forEach(function (s) {
+            for (var i = 0; i < s.addedCount; i++) {
+              var index = s.index + i
+              var newLista = s.object[index]
+              tags.push(newLista.tag)
+            }
+          }, this)
+
+          this.tags = tags
+        }
+      }
+
+      isActive(key, tab) {
+        var classList = ''
+        if (key === tab)
+          if (this.clicks % 2 == 0)
+            classList = 'active1'
+          else
+            classList = 'active2'
+        return classList
+      }
+
+      isAnterior() {
+
+      }
+
+      myClick(e) {
+        this.tab = e.model.item
+        this.clicks++
+      }
+
+      ready() {
+        super.ready()
+        this.tab = ''
+        this.clicks = 0
+        this.push('listas', {id: 1, description: 'Hola mundo 1', tag: 'tag1'})
+        this.push('listas', {id: 2, description: 'Hola mundo 2', tag: 'tag2'})
+        this.push('listas', {id: 3, description: 'Hola mundo 3', tag: 'tag3'})
+        this.push('listas', {id: 4, description: 'Hola mundo 4', tag: 'tag4'})
+        this.push('listas', {id: 5, description: 'Hola mundo 5', tag: 'tag5'})
+        this.push('listas', {id: 6, description: 'Hola mundo 6', tag: 'tag6'})
+        this.push('listas', {id: 7, description: 'Hola mundo 7', tag: 'tag7'})
+        this.notifyPath('listas')
+      }
+
+    }
+
+    customElements.define(TestAppChallenge.is, TestAppChallenge)
+  </script>
+</dom-module>

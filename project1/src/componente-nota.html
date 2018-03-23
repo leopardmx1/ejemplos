@@ -1,0 +1,63 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-ajax">
+
+<dom-module id="componente-nota">
+  <template>
+    <style>
+      p {
+        font-size: 1rem;
+        font-family: 'Roboto', 'Noto', sans-serif;
+      }
+      .notas{
+        background: #252525;
+        padding: 0.25rem;
+        width: 200px;
+      }
+      .nota{
+        background: #ddd;
+        border-radius: 0.25rem;
+        margin: 0.25rem;
+        margin-right: 0;
+        padding: 0.5rem;
+      }
+      .nota .encabezado{
+        color: #000;
+        display: flex;
+        margin: 0;
+        font-size: 0.8rem;
+      }
+      .nota .encabezado .nombre{
+        margin-right: 0.5rem;
+      }
+      .nota .encabezado .small{
+        color: #373737;
+      }
+      .nota .content{
+        color: #000;
+      }
+    </style>
+    <iron-ajax auto url="http://localhost:3000/api/notas" handle-as="json" last-response="{{notas}}"
+      ></iron-ajax>
+    <div class="notas">
+      <template is="dom-repeat" items="[[notas]]">
+        <div class="nota">
+          <div class="encabezado">
+            <div class="nombre"> {{ item.nombre }}</div><span class="small"> escribio:</span>
+          </div>
+          <div class="content">
+            {{ item.mensaje }}
+          </div>
+        </div>
+      </template>
+
+    </div>
+
+  </template>
+  <script>
+    class ComponenteNota extends Polymer.Element {
+      static get is() { return 'componente-nota' }
+    }
+
+    window.customElements.define(ComponenteNota.is, ComponenteNota)
+  </script>
+</dom-module>
