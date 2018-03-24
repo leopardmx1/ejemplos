@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="componente-saludo-bind">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `componente-saludo-bind`
+     * Componente que pinta el bind 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class ComponenteSaludoBind extends Polymer.Element {
+      static get is() { return 'componente-saludo-bind'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'componente-saludo-bind'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(ComponenteSaludoBind.is, ComponenteSaludoBind);
+  </script>
+</dom-module>

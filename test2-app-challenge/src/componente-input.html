@@ -1,0 +1,60 @@
+<link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/iron-a11y-keys/iron-a11y-keys.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+
+<dom-module id="componente-input">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <iron-a11y-keys id="a11y" target="[[target]]" keys="enter" on-keys-pressed="_onEnter"></iron-a11y-keys>
+    <paper-input id="input" label="Escribe Algo" value="{{userInput::input}}"></paper-input>
+  </template>
+
+  <script>
+    /**
+     * `componente-input`
+     * Input para el proyecto fina
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class ComponenteInput extends Polymer.Element {
+      static get is() { return 'componente-input'; }
+      static get properties() {
+        return {
+          userInput: {
+            type: String,
+            notify: true,
+          },
+          target: {
+            type: Object
+          }
+        }
+      }
+
+      ready() {
+        super.ready()
+        this.target = this.$.input;
+      }
+
+      checkForEnter (e) {
+        // check if 'enter' was pressed
+        if (e.keyCode === 13) {
+          // enter pressed!
+          console.log(this.userInput.value)
+        }
+      }
+
+      _onEnter() {
+        console.log(this.userInput.value)
+      }
+
+    }
+
+    window.customElements.define(ComponenteInput.is, ComponenteInput);
+  </script>
+</dom-module>

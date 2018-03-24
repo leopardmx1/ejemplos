@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="componente-input">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <paper-input label="Ingresa el texto"></paper-input>
+  </template>
+
+  <script>
+    /**
+     * `componente-input`
+     * Input para el proyecto fina
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class ComponenteInput extends Polymer.Element {
+      static get is() { return 'componente-input'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'componente-input'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(ComponenteInput.is, ComponenteInput);
+  </script>
+</dom-module>
